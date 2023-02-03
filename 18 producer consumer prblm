@@ -1,0 +1,111 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@Arshasri 
+Skrizwan16
+/
+operating-system-
+Public
+Fork your own copy of Skrizwan16/operating-system-
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security
+Insights
+operating-system-/18 producer consumer pblm
+@Skrizwan16
+Skrizwan16 Rename 18 to 18 producer consumer pblm
+Latest commit 907e4bc last week
+ History
+ 1 contributor
+67 lines (60 sloc)  1.23 KB
+
+#include<stdio.h>
+#include<stdlib.h>
+ 
+int mutex=1,full=0,empty=3,x=0;
+ 
+int main()
+{
+    int n;
+    void producer();
+    void consumer();
+    int wait(int);
+    int signal(int);
+    printf("\n1.Producer\n2.Consumer\n3.Exit");
+    while(1)
+    {
+        printf("\nEnter your choice:");
+        scanf("%d",&n);
+        switch(n)
+        {
+            case 1:    if((mutex==1)&&(empty!=0))
+                        producer();
+                    else
+                        printf("Buffer is full!!");
+                    break;
+            case 2:    if((mutex==1)&&(full!=0))
+                        consumer();
+                    else
+                        printf("Buffer is empty!!");
+                    break;
+            case 3:
+                    exit(0);
+                    break;
+        }
+    }
+   
+    return 0;
+}
+ 
+int wait(int s)
+{
+    return (--s);
+}
+ 
+int signal(int s)
+{
+    return(++s);
+}
+ 
+void producer()
+{
+    mutex=wait(mutex);
+    full=signal(full);
+    empty=wait(empty);
+    x++;
+    printf("\nProducer produces the item %d",x);
+    mutex=signal(mutex);
+}
+ 
+void consumer()
+{
+    mutex=wait(mutex);
+    full=wait(full);
+    empty=signal(empty);
+    printf("\nConsumer consumes item %d",x);
+    x--;
+    mutex=signal(mutex);
+}
+Footer
+© 2023 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+operating-system-/18 producer consumer pblm at main · Skrizwan16/operating-system-
